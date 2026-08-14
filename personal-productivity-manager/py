@@ -1,0 +1,404 @@
+# ==============================================
+#       PERSONAL PRODUCTIVITY MANAGER
+# ==============================================
+
+import json
+
+
+# ==============================================
+# LOAD DATA
+# ==============================================
+
+def load_data():
+
+    try:
+        with open("data.json", "r") as file:
+
+            data = json.load(file)
+
+            return data["tasks"], data["habits"]
+
+    except FileNotFoundError:
+
+        return [], []
+
+
+# ==============================================
+# SAVE DATA
+# ==============================================
+
+def save_data():
+
+    data = {
+        "tasks": tasks,
+        "habits": habits
+    }
+
+    with open("data.json", "w") as file:
+
+        json.dump(data, file, indent=4)
+
+
+# ==============================================
+# ADD A TASK
+# ==============================================
+
+def add_task():
+
+    print()
+    print("========== ADD TASK ==========")
+
+    task_name = input("Task: ")
+
+    task = {
+        "name": task_name,
+        "completed": False
+    }
+
+    tasks.append(task)
+
+    save_data()
+
+    print("Task added successfully!")
+
+
+# ==============================================
+# SHOW TASKS
+# ==============================================
+
+def show_tasks():
+
+    print()
+    print("========== MY TASKS ==========")
+
+    if len(tasks) == 0:
+
+        print("You don't have any tasks.")
+
+    else:
+
+        for number, task in enumerate(tasks, 1):
+
+            if task["completed"]:
+                status = "Completed"
+            else:
+                status = "Not completed"
+
+            print(
+                number,
+                "-",
+                task["name"],
+                "|",
+                status
+            )
+
+
+# ==============================================
+# COMPLETE A TASK
+# ==============================================
+
+def complete_task():
+
+    show_tasks()
+
+    if len(tasks) == 0:
+        return
+
+    choice = input(
+        "Enter the task number you completed: "
+    )
+
+    if choice.isdigit():
+
+        number = int(choice)
+
+        if 1 <= number <= len(tasks):
+
+            tasks[number - 1]["completed"] = True
+
+            save_data()
+
+            print("Task completed!")
+
+        else:
+
+            print("Invalid task number.")
+
+    else:
+
+        print("Please enter a number.")
+
+
+# ==============================================
+# DELETE A TASK
+# ==============================================
+
+def delete_task():
+
+    show_tasks()
+
+    if len(tasks) == 0:
+        return
+
+    choice = input(
+        "Enter the task number to delete: "
+    )
+
+    if choice.isdigit():
+
+        number = int(choice)
+
+        if 1 <= number <= len(tasks):
+
+            deleted = tasks.pop(number - 1)
+
+            save_data()
+
+            print(
+                "Deleted:",
+                deleted["name"]
+            )
+
+        else:
+
+            print("Invalid task number.")
+
+    else:
+
+        print("Please enter a number.")
+
+
+# ==============================================
+# ADD A HABIT
+# ==============================================
+
+def add_habit():
+
+    print()
+    print("========== ADD HABIT ==========")
+
+    habit_name = input("Habit: ")
+
+    habit = {
+        "name": habit_name,
+        "completed": 0
+    }
+
+    habits.append(habit)
+
+    save_data()
+
+    print("Habit added successfully!")
+
+
+# ==============================================
+# SHOW HABITS
+# ==============================================
+
+def show_habits():
+
+    print()
+    print("========== MY HABITS ==========")
+
+    if len(habits) == 0:
+
+        print("You don't have any habits.")
+
+    else:
+
+        for number, habit in enumerate(habits, 1):
+
+            print(
+                number,
+                "-",
+                habit["name"],
+                "| Completed:",
+                habit["completed"],
+                "times"
+            )
+
+
+# ==============================================
+# COMPLETE A HABIT
+# ==============================================
+
+def complete_habit():
+
+    show_habits()
+
+    if len(habits) == 0:
+        return
+
+    choice = input(
+        "Enter the habit number you completed: "
+    )
+
+    if choice.isdigit():
+
+        number = int(choice)
+
+        if 1 <= number <= len(habits):
+
+            habits[number - 1]["completed"] += 1
+
+            save_data()
+
+            print("Great! Habit completed!")
+
+        else:
+
+            print("Invalid habit number.")
+
+    else:
+
+        print("Please enter a number.")
+
+
+# ==============================================
+# SHOW PRODUCTIVITY SUMMARY
+# ==============================================
+
+def show_summary():
+
+    print()
+    print("========== PRODUCTIVITY SUMMARY ==========")
+
+    completed_tasks = 0
+
+    for task in tasks:
+
+        if task["completed"]:
+            completed_tasks += 1
+
+    total_tasks = len(tasks)
+    total_habits = len(habits)
+
+    print()
+    print("Total tasks:", total_tasks)
+    print("Completed tasks:", completed_tasks)
+    print("Total habits:", total_habits)
+
+    if total_tasks > 0:
+
+        percentage = (
+            completed_tasks / total_tasks
+        ) * 100
+
+        print(
+            "Task completion:",
+            round(percentage, 1),
+            "%"
+        )
+
+
+# ==============================================
+# LOAD SAVED DATA
+# ==============================================
+
+tasks, habits = load_data()
+
+
+# ==============================================
+# MAIN MENU
+# ==============================================
+
+while True:
+
+    print()
+    print("==============================================")
+    print("       PERSONAL PRODUCTIVITY MANAGER")
+    print("==============================================")
+
+    print()
+    print("1 - Add a task")
+    print("2 - Show tasks")
+    print("3 - Complete a task")
+    print("4 - Delete a task")
+
+    print()
+
+    print("5 - Add a habit")
+    print("6 - Show habits")
+    print("7 - Complete a habit")
+
+    print()
+
+    print("8 - Show productivity summary")
+
+    print()
+
+    print("0 - Exit")
+
+    print("==============================================")
+
+    choice = input("Choose an option: ")
+
+
+    # Add a task
+    if choice == "1":
+
+        add_task()
+
+
+    # Show tasks
+    elif choice == "2":
+
+        show_tasks()
+
+
+    # Complete a task
+    elif choice == "3":
+
+        complete_task()
+
+
+    # Delete a task
+    elif choice == "4":
+
+        delete_task()
+
+
+    # Add a habit
+    elif choice == "5":
+
+        add_habit()
+
+
+    # Show habits
+    elif choice == "6":
+
+        show_habits()
+
+
+    # Complete a habit
+    elif choice == "7":
+
+        complete_habit()
+
+
+    # Show summary
+    elif choice == "8":
+
+        show_summary()
+
+
+    # Exit
+    elif choice == "0":
+
+        save_data()
+
+        print()
+        print("==============================================")
+        print("     THANK YOU FOR USING THE PROGRAM")
+        print("==============================================")
+        print("Your data has been saved.")
+
+        break
+
+
+    # Invalid choice
+    else:
+
+        print()
+        print("Invalid choice.")
+        print("Please choose a valid option.")
