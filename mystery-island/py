@@ -1,0 +1,211 @@
+# ==============================================
+#              MYSTERY ISLAND
+# ==============================================
+
+# A small text adventure game created with Python
+
+
+# Show the introduction
+def introduction():
+
+    print("==============================================")
+    print("              MYSTERY ISLAND")
+    print("==============================================")
+    print()
+    print("You wake up alone on a mysterious island.")
+    print("You don't know how you got here.")
+    print("In front of you, there are three doors.")
+    print()
+    print("Your adventure begins...")
+    print()
+
+
+# Start the game
+def start_game():
+
+    introduction()
+
+    # First choice
+    choice = input(
+        "Choose a door: RED, BLUE or YELLOW: "
+    ).lower()
+
+    # RED DOOR
+    if choice == "red":
+
+        print()
+        print("You enter a dark cave.")
+        print("You hear something moving behind you...")
+
+        choice = input(
+            "Do you RUN or HIDE? "
+        ).lower()
+
+        if choice == "run":
+
+            print()
+            print("You run as fast as you can!")
+            print("You escape the cave safely.")
+            print()
+            print("You survived!")
+
+        elif choice == "hide":
+
+            print()
+            print("You hide behind a large rock.")
+            print("Suddenly, a crocodile appears!")
+            print("It finds you before you can escape.")
+            print()
+            print("GAME OVER!")
+
+        else:
+
+            print()
+            print("You hesitate...")
+            print("The creature finds you.")
+            print("GAME OVER!")
+
+
+    # BLUE DOOR
+    elif choice == "blue":
+
+        print()
+        print("You enter an ancient forest.")
+        print("You find a small wooden house.")
+        print()
+
+        choice = input(
+            "Do you ENTER the house or CONTINUE through the forest? "
+        ).lower()
+
+        if choice == "enter":
+
+            print()
+            print("Inside the house, you find an old man.")
+            print("He gives you a golden key.")
+            print()
+            print("He says:")
+            print('"Only someone with a good heart can use this key."')
+            print()
+
+            choice = input(
+                "Do you TAKE the key or LEAVE it? "
+            ).lower()
+
+            if choice == "take":
+
+                print()
+                print("You take the key.")
+                print("A hidden door opens behind the old man.")
+                print("You have discovered the secret path!")
+                print()
+                print("YOU WIN!")
+
+            elif choice == "leave":
+
+                print()
+                print("You decide not to take what isn't yours.")
+                print("The old man smiles.")
+                print()
+                print('"You have shown that you can be trusted."')
+                print("He shows you the way home.")
+                print()
+                print("YOU WIN!")
+
+            else:
+
+                print()
+                print("The old man disappears.")
+                print("You are trapped in the house.")
+                print()
+                print("GAME OVER!")
+
+        elif choice == "continue":
+
+            print()
+            print("You continue walking through the forest.")
+            print("Suddenly, you hear a wolf behind you.")
+            print("You try to escape, but you lose your way.")
+            print()
+            print("GAME OVER!")
+
+        else:
+
+            print()
+            print("You don't make a decision.")
+            print("The forest becomes completely dark.")
+            print()
+            print("GAME OVER!")
+
+
+    # YELLOW DOOR
+    elif choice == "yellow":
+
+        print()
+        print("You enter a beautiful ancient temple.")
+        print("In front of you are two paths.")
+        print()
+
+        choice = input(
+            "Do you choose the LIGHT path or the DARK path? "
+        ).lower()
+
+        if choice == "light":
+
+            print()
+            print("You follow the light.")
+            print("You discover a hidden treasure.")
+            print("But you don't take it.")
+            print("Instead, you continue looking for a way home.")
+            print()
+            print("You made the right decision.")
+            print("YOU WIN!")
+
+        elif choice == "dark":
+
+            print()
+            print("You enter the dark path.")
+            print("The floor suddenly disappears!")
+            print("You fall into a deep trap.")
+            print()
+            print("GAME OVER!")
+
+        else:
+
+            print()
+            print("You stand still.")
+            print("The temple doors close.")
+            print()
+            print("GAME OVER!")
+
+
+    # INVALID FIRST CHOICE
+    else:
+
+        print()
+        print("That door does not exist.")
+        print("The island disappears into the fog.")
+        print()
+        print("GAME OVER!")
+
+
+# ==============================================
+#                  MAIN PROGRAM
+# ==============================================
+
+while True:
+
+    start_game()
+
+    print()
+    again = input(
+        "Do you want to play again? (yes/no): "
+    ).lower()
+
+    if again != "yes":
+
+        print()
+        print("Thanks for playing Mystery Island!")
+        break
+
+    print()
