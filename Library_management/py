@@ -1,0 +1,440 @@
+# ==============================================
+#            LIBRARY MANAGEMENT SYSTEM
+# ==============================================
+
+import os
+import time
+
+
+# Store all library books
+books = []
+
+# Store books that were donated
+donated_books = []
+
+# Store books that I want to buy
+wishlist = []
+
+
+# ==============================================
+# CLEAR SCREEN
+# ==============================================
+
+def clear():
+    os.system("cls" if os.name == "nt" else "clear")
+
+
+# ==============================================
+# ADD A BOOK
+# ==============================================
+
+def add_book():
+
+    clear()
+
+    print("==============================================")
+    print("                 ADD A BOOK")
+    print("==============================================")
+
+    title = input("Book title: ")
+    author = input("Author: ")
+
+    book = {
+        "title": title,
+        "author": author
+    }
+
+    books.append(book)
+
+    print()
+    print("Book added to your library!")
+
+    time.sleep(2)
+
+
+# ==============================================
+# SHOW CURRENT BOOKS
+# ==============================================
+
+def show_books():
+
+    clear()
+
+    print("==============================================")
+    print("              MY CURRENT BOOKS")
+    print("==============================================")
+
+    if len(books) == 0:
+
+        print("Your library is empty.")
+
+    else:
+
+        for number, book in enumerate(books, 1):
+
+            print()
+            print(number, "-", book["title"])
+            print("    Author:", book["author"])
+
+    print()
+    print("Returning to menu in 10 seconds...")
+    time.sleep(10)
+
+
+# ==============================================
+# ADD BOOK TO WISHLIST
+# ==============================================
+
+def add_wishlist():
+
+    clear()
+
+    print("==============================================")
+    print("                 WISHLIST")
+    print("==============================================")
+
+    title = input("Book title you want to buy: ")
+    author = input("Author: ")
+
+    book = {
+        "title": title,
+        "author": author
+    }
+
+    wishlist.append(book)
+
+    print()
+    print("Book added to your wishlist!")
+
+    time.sleep(2)
+
+
+# ==============================================
+# SHOW WISHLIST
+# ==============================================
+
+def show_wishlist():
+
+    clear()
+
+    print("==============================================")
+    print("               BOOK WISHLIST")
+    print("==============================================")
+
+    if len(wishlist) == 0:
+
+        print("Your wishlist is empty.")
+
+    else:
+
+        for number, book in enumerate(wishlist, 1):
+
+            print()
+            print(number, "-", book["title"])
+            print("    Author:", book["author"])
+
+    print()
+    print("Returning to menu in 10 seconds...")
+    time.sleep(10)
+
+
+# ==============================================
+# BUY A WISHLIST BOOK
+# ==============================================
+
+def buy_book():
+
+    clear()
+
+    print("==============================================")
+    print("             BUY A WISHLIST BOOK")
+    print("==============================================")
+
+    if len(wishlist) == 0:
+
+        print("Your wishlist is empty.")
+        time.sleep(2)
+        return
+
+    for number, book in enumerate(wishlist, 1):
+
+        print(
+            number,
+            "-",
+            book["title"],
+            "|",
+            book["author"]
+        )
+
+    print()
+
+    choice = input(
+        "Enter the number of the book you bought: "
+    )
+
+    if choice.isdigit():
+
+        number = int(choice)
+
+        if 1 <= number <= len(wishlist):
+
+            book = wishlist.pop(number - 1)
+
+            books.append(book)
+
+            print()
+            print("The book was moved to your library!")
+
+        else:
+
+            print("Invalid book number.")
+
+    else:
+
+        print("Please enter a number.")
+
+    time.sleep(2)
+
+
+# ==============================================
+# DONATE A BOOK
+# ==============================================
+
+def donate_book():
+
+    clear()
+
+    print("==============================================")
+    print("              DONATE A BOOK")
+    print("==============================================")
+
+    if len(books) == 0:
+
+        print("You have no books to donate.")
+        time.sleep(2)
+        return
+
+    for number, book in enumerate(books, 1):
+
+        print(
+            number,
+            "-",
+            book["title"],
+            "|",
+            book["author"]
+        )
+
+    print()
+
+    choice = input(
+        "Enter the number of the book you donated: "
+    )
+
+    if choice.isdigit():
+
+        number = int(choice)
+
+        if 1 <= number <= len(books):
+
+            book = books.pop(number - 1)
+
+            donated_books.append(book)
+
+            print()
+            print("The book was moved to donated books.")
+
+        else:
+
+            print("Invalid book number.")
+
+    else:
+
+        print("Please enter a number.")
+
+    time.sleep(2)
+
+
+# ==============================================
+# SHOW DONATED BOOKS
+# ==============================================
+
+def show_donated():
+
+    clear()
+
+    print("==============================================")
+    print("               DONATED BOOKS")
+    print("==============================================")
+
+    if len(donated_books) == 0:
+
+        print("No donated books yet.")
+
+    else:
+
+        for number, book in enumerate(donated_books, 1):
+
+            print()
+            print(number, "-", book["title"])
+            print("    Author:", book["author"])
+
+    print()
+    print("Returning to menu in 10 seconds...")
+    time.sleep(10)
+
+
+# ==============================================
+# SEARCH FOR A BOOK
+# ==============================================
+
+def search_book():
+
+    clear()
+
+    print("==============================================")
+    print("                 SEARCH BOOK")
+    print("==============================================")
+
+    search = input(
+        "Enter book title or author: "
+    ).lower()
+
+    found = False
+
+    # Search in current books
+    for book in books:
+
+        title = book["title"].lower()
+        author = book["author"].lower()
+
+        if search in title or search in author:
+
+            print()
+            print("Book found!")
+            print("Title:", book["title"])
+            print("Author:", book["author"])
+
+            found = True
+
+    # Search in wishlist
+    for book in wishlist:
+
+        title = book["title"].lower()
+        author = book["author"].lower()
+
+        if search in title or search in author:
+
+            print()
+            print("Book found in your wishlist!")
+            print("Title:", book["title"])
+            print("Author:", book["author"])
+
+            found = True
+
+    if found == False:
+
+        print()
+        print("No book found.")
+
+    print()
+    print("Returning to menu in 10 seconds...")
+    time.sleep(10)
+
+
+# ==============================================
+# MAIN MENU
+# ==============================================
+
+while True:
+
+    clear()
+
+    print("==============================================")
+    print("          MY LIBRARY MANAGEMENT")
+    print("==============================================")
+    print()
+
+    print("1 - Add a book")
+    print("2 - Show current books")
+    print("3 - Add book to wishlist")
+    print("4 - Show wishlist")
+    print("5 - Buy a wishlist book")
+    print("6 - Donate a book")
+    print("7 - Show donated books")
+    print("8 - Search for a book")
+    print("0 - Exit")
+
+    print()
+
+    choice = input("Choose an option: ")
+
+
+    # Add a book
+    if choice == "1":
+
+        add_book()
+
+
+    # Show current books
+    elif choice == "2":
+
+        show_books()
+
+
+    # Add to wishlist
+    elif choice == "3":
+
+        add_wishlist()
+
+
+    # Show wishlist
+    elif choice == "4":
+
+        show_wishlist()
+
+
+    # Buy a wishlist book
+    elif choice == "5":
+
+        buy_book()
+
+
+    # Donate a book
+    elif choice == "6":
+
+        donate_book()
+
+
+    # Show donated books
+    elif choice == "7":
+
+        show_donated()
+
+
+    # Search
+    elif choice == "8":
+
+        search_book()
+
+
+    # Exit
+    elif choice == "0":
+
+        clear()
+
+        print("==============================================")
+        print("       THANK YOU FOR USING MY LIBRARY")
+        print("==============================================")
+        print()
+        print("Keep reading and keep learning!")
+        break
+
+
+    # Invalid choice
+    else:
+
+        print()
+        print("Invalid choice.")
+        print("Please choose a valid option.")
+
+        time.sleep(2)
