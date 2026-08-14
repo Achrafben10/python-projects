@@ -46,4 +46,4 @@ Through this project, I practiced:
 ## My Goal
 
 I created this project as part of my journey to improve my
-programming skills and prepare for an IT Ausbildung.
+programming skills and prepare for future projects.
