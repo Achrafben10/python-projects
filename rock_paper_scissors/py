@@ -1,0 +1,181 @@
+# ==============================================
+#             ROCK PAPER SCISSORS
+# ==============================================
+
+import random
+
+
+# Show the game rules
+def show_rules():
+
+    print()
+    print("========== GAME RULES ==========")
+    print("Rock beats Scissors")
+    print("Scissors beats Paper")
+    print("Paper beats Rock")
+    print("Choose 1, 2 or 3 to play.")
+    print("Choose 0 to exit.")
+    print("================================")
+
+
+# Display the hand drawings
+def show_hand(choice):
+
+    if choice == "rock":
+        print("""
+        _______
+    ---'   ____)
+          (_____)
+          (_____)
+          (____)
+    ---.__(___)
+        """)
+
+    elif choice == "paper":
+        print("""
+        _______
+    ---'   ____)____
+              ______)
+             _______)
+            _______)
+    ---.__________)
+        """)
+
+    elif choice == "scissors":
+        print("""
+        _______
+    ---'   ____)____
+              ______)
+           __________)
+          (____)
+    ---.__(___)
+        """)
+
+
+# Get the computer's choice
+def computer_choice():
+
+    choices = ["rock", "paper", "scissors"]
+
+    return random.choice(choices)
+
+
+# Check who won the round
+def check_winner(player, computer):
+
+    if player == computer:
+        return "draw"
+
+    elif (
+        (player == "rock" and computer == "scissors")
+        or
+        (player == "paper" and computer == "rock")
+        or
+        (player == "scissors" and computer == "paper")
+    ):
+        return "player"
+
+    else:
+        return "computer"
+
+
+# ==============================================
+#                  MAIN GAME
+# ==============================================
+
+print("==============================================")
+print("           ROCK PAPER SCISSORS")
+print("==============================================")
+
+learn = input("Do you want to learn the rules? (yes/no): ").lower()
+
+if learn == "yes":
+    show_rules()
+
+
+player_score = 0
+computer_score = 0
+
+
+# Keep playing until the user chooses 0
+while True:
+
+    print()
+    print("================================")
+    print("1 - Rock")
+    print("2 - Paper")
+    print("3 - Scissors")
+    print("0 - Exit")
+    print("================================")
+
+    choice = input("Your choice: ")
+
+    # Exit the game
+    if choice == "0":
+
+        print()
+        print("========== FINAL SCORE ==========")
+        print("You:", player_score)
+        print("Computer:", computer_score)
+        print("Thanks for playing!")
+
+        break
+
+
+    # Convert the number into a choice
+    if choice == "1":
+        player = "rock"
+
+    elif choice == "2":
+        player = "paper"
+
+    elif choice == "3":
+        player = "scissors"
+
+    else:
+
+        print("Invalid choice. Please choose 1, 2, 3 or 0.")
+        continue
+
+
+    # Computer chooses randomly
+    computer = computer_choice()
+
+
+    # Show both choices
+    print()
+    print("Your choice:")
+    show_hand(player)
+
+    print()
+    print("Computer's choice:")
+    show_hand(computer)
+
+
+    # Find the winner
+    winner = check_winner(player, computer)
+
+
+    # Display the result
+    print()
+
+    if winner == "draw":
+
+        print("It's a draw!")
+
+    elif winner == "player":
+
+        print("You win this round!")
+        player_score += 1
+
+    else:
+
+        print("Computer wins this round!")
+        computer_score += 1
+
+
+    # Show the current score
+    print()
+    print("---------- SCORE ----------")
+    print("You:", player_score)
+    print("Computer:", computer_score)
